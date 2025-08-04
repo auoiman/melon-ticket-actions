@@ -1,0 +1,30 @@
+name: Melon Ticket Checker
+on:
+  schedule:
+    - cron: '*/5 * * * *' # Run every 5 minutes
+jobs:
+  check-tickets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check Tickets on Melon
+        id: melon-check
+        uses: mooyoul/melon-ticket-actions@v1.1.0
+        with:
+          product-id: '211541'
+          schedule-id: '100001'
+          seat-id: '1_0'
+          message: 'Tickets available for your event!'
+
+      - name: Send Telegram Notification
+        if: success() # Run if the previous step succeeds
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            🎟️ Tickets are available for your Melon event!
+            Product ID: 211541
+            Schedule ID: 100001
+            Seat ID: 1_0
+            Check now: https://m.globalticket.melon.com/performance/detail/211541?lang=en-US
