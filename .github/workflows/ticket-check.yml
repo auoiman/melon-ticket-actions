@@ -11,7 +11,7 @@ jobs:
         id: melon-check
         uses: mooyoul/melon-ticket-actions@v1.1.0
         with:
-          product-id: '211541'
+          product-id: '211558'
           schedule-id: '100001'
           seat-id: '1_0'
           message: 'Tickets available for your event!'
